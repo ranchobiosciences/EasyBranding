@@ -1,12 +1,15 @@
-Package: RanchoStyle
+Package: EasyBranding
 Type: Package
-Title: Company colors and theme for using ggplot2
-Version: 0.1.0
+Title: Easily customizable company colors
+Description: Developed by RanchoBioSciences for use with their discerning clientele. Easy configuration of corporate color schemes and palettes for using ggplot2. 
+Version: 0.2.0
 Author: Dan Rozelle
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Suggests: 
+    yaml,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+StagedInstall: no

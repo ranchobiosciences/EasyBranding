@@ -1,0 +1,96 @@
+---
+title: "Easy themes for your plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Easy themes for your plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+<style>
+    img {
+        border: 0;
+    }
+</style>
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>"
+)
+```
+
+## Configuration
+
+Before using this package you'll want to configure color codes and palette combinations. This is accomplished on the ```R/config.yml``` file using standard yaml formatting (including a trailing newline). This needs to be performed the package is installed. Required components are:
+
+1. colors: define hex codes that correspond to specific hex color codes. If you're looking for inspiration there are plenty of [tools to help](https://coolors.co/f58220-7ac143-591f00-ffd051-f7a964-61ab33-b84000-ffe499). These will provide both the basis for palettes you define but also be available to use manually.
+2. palettes: named collections of colors defined in the colors section. We minimally require a *main* palette and support as many more as desired.
+
+```
+colors:
+  orange: "#F58220"
+  lime: "#7AC143"
+  brown: "#591F00"
+  gold: "#ffd051"
+  sand: "#f7a964"  
+  green: "#508d2a"
+  red: "#b84000"
+  cream: "#b84000"
+palettes:
+  all:
+    - orange
+    - lime
+    - brown
+    - green
+    - gold
+    - red
+  main:
+    - orange
+    - lime  
+  light:
+    - orange
+    - gold
+
+```
+
+## Quick start
+
+These examples demonstrate usage of two functions (scales) that can be used to modify color schemes of a ggplot. Common params for these include:
+
+- __*palette*__ Name of a configured palette of colors
+- __*reverse*__ Boolean if you want to reverse the order of configured colors
+- __*discrete*__ Boolean indicating whether color aesthetic is discrete. Alternatively it will create a scale appropriate for continuous values.
+
+```{r fig.width=6}
+library(EasyBranding)
+library(ggplot2)
+library(ggprism)
+
+theme_set(theme_prism() + theme(aspect.ratio = 0.4))
+p <- ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width, color = Species)) +
+  geom_point(size = 2) +
+  geom_smooth(formula = 'y ~ x', method = 'glm', se = F)
+
+p + scale_color_brand() + 
+  labs(title='main palette')
+p + scale_color_brand(palette = 'dark') + 
+  labs(title='dark palette')
+p + scale_color_brand(reverse = T) +
+  labs(title='reverse main palette')
+```
+
+In this series we demonstrate how palettes are created when datasets require more colors than those defined in a palette. This is typically accomplished by interpolating intermediate values, therefore when a palette is defined by 2 values the colors are all intermediate those two, then more are specified then colors are interpolated along those specifications.
+
+```{r fig.width=6}
+df <- data.frame(category = LETTERS[1:20],
+                 value = runif(20)+1)
+p <- ggplot(df, aes(category, value, fill = category)) +
+  geom_col()
+p + scale_fill_brand() + 
+  labs(title='main palette') +
+  theme(legend.position = 'none')
+p + scale_fill_brand(palette = "all") + 
+  labs(title='*all* palette') +
+  theme(legend.position = 'none')
+```

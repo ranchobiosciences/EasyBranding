@@ -1,0 +1,28 @@
+colors:
+  orange: "#F58220"
+  green: "#7AC143"
+  brown: "#591F00"
+  gold: "#ffd051"
+  sand: "#f7a964"  
+  dark_green: "#508d2a"
+  red: "#b84000"
+  cream: "#b84000"
+palettes:
+  all:
+    - orange
+    - green
+    - brown
+    - dark_green
+    - gold
+    - red
+  main:
+    - orange
+    - green  
+  light:
+    - orange
+    - gold
+  dark:
+    - dark_green
+    - brown
+    - red
+  
